@@ -1,44 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { ProgressViewIOSComponent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold, Inter_900Black } from '@expo-google-fonts/inter'
+
+import { Background } from './src/components/Background';
+
+import { StatusBar } from 'react-native';
+
+import  { Home } from './src/screens/Home';
+
+import { Loading } from './src/components/Loading';
 
 export default function App() {
+  const [fontsLoaded]  = useFonts({
+    Inter_400Regular, 
+    Inter_600SemiBold, 
+    Inter_700Bold, 
+    Inter_900Black
+  });
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Oi, tudo Bem?
-
-        
-        </Text>
-
-        <Button title="Me aperte!!!"></Button>
-      <StatusBar style="auto" />
-    </View>
+    <Background>
+      <StatusBar 
+      barStyle="light-content"
+      backgroundColor="transparent"
+      translucent
+      />
+      { fontsLoaded ? <Home/> : <Loading />}
+    </Background>
   );
 }
 
-interface ButtonProps{
-  title: String;
-}
 
-function Button(props: ButtonProps){
-  return(
-    <TouchableOpacity>
-      <Text style={styles.title}>
-        {props.title}
-      </Text>
-    </TouchableOpacity>
-  )
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    color: '#fff',
-    fontSize: 26
-  }
-});
+;
