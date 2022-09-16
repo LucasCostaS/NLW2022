@@ -23,10 +23,10 @@ export const styles = StyleSheet.create({
     height: 20,
   },
   cover: {
-    width: 311,
+    width: 300,
     height: 160,
     borderRadius: 8,
-    marginTop: 32,
+    marginTop: 24,
   },
   containerList: {
     width: "100%",
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     paddingRight: 64,
     alignItems: 'flex-start',
     borderRadius: 8,
-    marginTop: 32,
+    marginTop: 0,
   },
   emptyListText: {
     color: THEME.COLORS.CAPTION_300,

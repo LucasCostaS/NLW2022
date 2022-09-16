@@ -9,6 +9,7 @@ import { THEME } from "../../theme";
 import logoImg from "../../assets/logo-nlw-esports.png";
 import { Heading } from "../../components/Heading";
 import { DuoCard, DuoCardProps } from "../../components/DuoCard";
+import { DuoMatch } from "../../components/DuoMatch";
 import { useEffect, useState } from "react";
 
 
@@ -19,9 +20,16 @@ export function Game() {
   const game = route.params as GameParams;
   const navigation = useNavigation();
   const [duos, setDuos] = useState<DuoCardProps[]>([])
+  const [discordDuoSelected, setDiscordDuoSelected] = useState('')
 
   function handleGoBack() {
     navigation.goBack();
+  }
+
+  async function getDiscordUser(adsId: string) {
+    fetch(`http://192.168.1.7:3333/ads/${adsId}/discord`)
+      .then(Response => Response.json())
+      .then(data => setDiscordDuoSelected(data.discord));
   }
 
   useEffect(() => {
@@ -63,20 +71,20 @@ export function Game() {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <DuoCard data={item}
-              onConnect={() => { }} />
+              onConnect={() => getDiscordUser(item.id)} />
           )}
           horizontal
-          style={styles.containerList }
+          style={styles.containerList}
           contentContainerStyle={[duos.length > 0 ? styles.contentList : styles.emptyListContainer]}
           showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={()=>(
+          ListEmptyComponent={() => (
             <Text style={styles.emptyListText}>
               Não há Anúncios publicados ainda.
 
             </Text>
           )}
         />
-
+        <DuoMatch visible={discordDuoSelected.length > 0} discord={discordDuoSelected} onClose={() => setDiscordDuoSelected('')} />
 
       </SafeAreaView>
     </Background>
